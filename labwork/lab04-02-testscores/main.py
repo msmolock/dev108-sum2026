@@ -2,7 +2,6 @@
 # July 21, 2026
 # Exercise 3-2
 
-
 # display a welcome message
 print("The Test Scores application")
 print()

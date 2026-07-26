@@ -13,25 +13,25 @@ def display_title():
 def play_game(name):
     # Prompt player for difficulty level
     print("Select difficulty level:")
-    print("Easy = 1 to 10 (5 tries)")
-    print("Medium = 1 to 100 (8 tries)")
-    print("Hard = 1 to 1000 (10 tries)")
+    print("easy = 1 to 10 (5 tries)")
+    print("medium = 1 to 100 (8 tries)")
+    print("hard = 1 to 1000 (10 tries)")
     
     # loop for a valid choice
     while True:
-        difficulty = input("Enter difficulty (E/M/H): ")
+        difficulty = input("Enter difficulty (easy/medium/hard): ")
         difficulty = difficulty.lower()
-        if difficulty == "e" or difficulty == "m" or difficulty == "h":
+        if difficulty == "easy" or difficulty == "medium" or difficulty == "hard":
             break
-    else:
-        print("Invalid choice. Please type 'E', 'M', or 'H'.")
+        else:
+            print("Invalid choice. Please type 'easy', 'medium', or 'hard'.")
     print()
 
     #range limit and max tries based on choice
-    if difficulty == "e":
+    if difficulty == "easy":
         limit = 10
         max_tries = 5
-    elif difficulty == "m":
+    elif difficulty == "medium":
         limit = 100
         max_tries = 8
     else:
@@ -100,3 +100,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
