@@ -21,7 +21,7 @@ def main():
         print("1 - Say Hello")
         print("2 - Output full name")
         print("3 - Output last name, first name")
-        print("4 - Read documentation")
+        print("4 - Read documentation (press 'q' to exit documentation)")
         print("5 - Exit")
 
 # Choices
@@ -42,7 +42,7 @@ def main():
 
         elif choice == "4":
             print("== Module Documentation ==")
-            print("(Press 'q' to exit the documentation viewer)")
+
             help(nameformat)
 
         elif choice == "5":
