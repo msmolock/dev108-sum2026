@@ -24,9 +24,9 @@ def write_trips(trips):
         writer.writerows(trips)
 
 def list_trips(trips):
-    print("Distance    Gallons    MPG")
+    print(f"{'Distance':<12}{'Gallons':<12}{'MPG':<12}")
     for trip in trips:
-        print(f"{trip[0]}\t{trip[1]}\t{trip[2]}")
+        print(f"{trip[0]:<12}{trip[1]:<12}{trip[2]:<12}")
 
 def get_miles_driven():
     while True:
@@ -39,7 +39,7 @@ def get_miles_driven():
     
 def get_gallons_used():
     while True:
-        gallons_used = float(input("Enter gallons of gas:     "))                    
+        gallons_used = float(input("Enter gallons of gas:    "))                    
         if gallons_used > 0:       
             return gallons_used
         else:
@@ -49,6 +49,7 @@ def get_gallons_used():
 def main():
     # display a welcome message
     print("The Miles Per Gallon application")
+    print()
 
 # list to hold trips
     trips = read_trips()
