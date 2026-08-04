@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Michael Smolock
-# 8/4/2026
+# 8/3/2026
 # Dev108
 # This is just another Futurama character generator
 # the main antagonist is the wacky Captain Zapp Brannigan. So, random stats are in his style.
