@@ -20,7 +20,13 @@ while choice == "y":
     # get the user entry
     order_total = Decimal(input("Enter order total: "))
     order_total = order_total.quantize(Decimal("1.00"), ROUND_HALF_UP)
-    print()               
+    print()
+
+# A check for values > 0 validation
+    while order_total <= 0:
+        print("Order total must be greater than zero.")
+        order_total = Decimal(input("Enter order total: "))
+        order_total = order_total.quantize(Decimal("1.00"), ROUND_HALF_UP)               
 
     # determine the discount percent
     if order_total > 0 and order_total < 100:
