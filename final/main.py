@@ -4,6 +4,22 @@
 # Final Project - Futurama battle 
 
 import csv
+import random
+import time
+
+
+def display_title():
+    print("=" * 60)
+    print(" Connecting to D.O.O.P Central database....")
+    time.sleep(1.5)
+    print(" Loading Personnel files and Character Dossiers....")
+    time.sleep(0.6)
+    print("=" * 60)
+    time.sleep(1.5)
+    print("\n" + "=" * 60)
+    print("             FUTURAMA BATTLE SIMULATOR")
+    print("=" * 60)
+    print()
 
 # Column headers for csv
 
@@ -176,11 +192,11 @@ def get_defense_label(value):
 
 
 def get_rank_label(value):
-    if wins >= 10:
+    if value >= 10:
         return "Decorated Ace"
-    elif wins >= 5:
+    elif value >= 5:
         return "Veteran"
-    elif wins >= 1:
+    elif value >= 1:
         return "Battle tested"
     else:
         return "Rookie Cadet"
@@ -199,5 +215,84 @@ def list_characters(characters):
         print(f"{character['Name']:<25}{character['Faction']:<10}{hp_display:<24}{attack_display:<25}{defense_display:<25}{character['Wins']:<6}{character['Losses']:<6}")
 
 characters = load_characters("characters.csv")
-list_characters(characters)
-print(characters)
+
+
+def add_character(characters):
+    print("\n" + "=" * 40)
+    print("      RECRUIT NEW CHARACTER      ")
+    name = input("Enter character name: ").strip()
+    if not name:
+        print("[!] Name cannot be empty. Dismissed")
+        return
+
+    faction = input("Enter Faction (eg. Officer or Enemy): ").strip().title() or "Neutral"
+    power = input("Enter special power name: ").strip().title() or "Standard Strike"
+    role = input("Enter combat role (e.g Tank, Glass Cannon): ").strip().title() or "Recruit"
+
+    hp = random.randint(90, 140)
+    attack = random.randint(16, 30)
+    defense = random.randint(10, 20)
+
+    save_characters("characters.csv", characters)
+    print(f"\n{name} has been added to the roster!")
+
+    new_char = {
+        "Name": name,
+        "Faction": faction,
+        "HP": hp,
+        "MaxHP": hp,
+        "Attack": attack,
+        "Defense": defense,
+        "Power": power,
+        "Combat_Role": role,
+        "Wins": 0,
+        "Losses": 0,
+    }
+
+    characters.append(new_char)
+
+  
+
+def display_menu():
+    print("\n" + "=" * 40)
+    print("          COMMAND MENU          ")
+    print("=" * 40)
+    print("   list - full character roster")
+    print("   add  - Add a new character")
+    print("   exit - Exit the program")
+    print("=" * 40)
+
+
+def save_characters(filename, characters):
+    with open(filename, "w", newline="") as file:
+        writer = csv.DictWriter(file, fieldnames=fields)
+        writer.writeheader()
+        for character in characters:
+            row = {key: character[key] for key in fields}
+            writer.writerow(row)
+   
+
+def main():
+    display_title()
+    characters = load_characters("characters.csv")
+    
+    while True:
+        display_menu()
+        command = input("Command: ").strip().lower()
+        
+        if command == "list":
+            list_characters(characters)
+        elif command == "add":
+            add_character(characters)
+        elif command == "exit":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid command. Please try again.\n")
+
+if __name__ == "__main__":
+    main()
+
+
+
+
