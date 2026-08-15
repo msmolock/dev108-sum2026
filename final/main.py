@@ -233,9 +233,6 @@ def add_character(characters):
     attack = random.randint(16, 30)
     defense = random.randint(10, 20)
 
-    save_characters("characters.csv", characters)
-    print(f"\n{name} has been added to the roster!")
-
     new_char = {
         "Name": name,
         "Faction": faction,
@@ -246,20 +243,73 @@ def add_character(characters):
         "Power": power,
         "Combat_Role": role,
         "Wins": 0,
-        "Losses": 0,
+           "Losses": 0,
     }
-
+    
     characters.append(new_char)
 
-  
+    save_characters("characters.csv", characters)
+    print(f"\n{name} has been added to the roster!")
+
+def search_character(characters):
+    print("\n" + "=" * 40)
+    print("          SEARCH CHARACTERS          ")
+    print("=" * 40)
+
+    search_name = input("Enter character name to search: ").strip().lower()
+    if not search_name:
+        print("[!] Name cannot be empty.")
+        return
+
+    for character in characters:
+        if search_name in character["Name"].lower():
+            display_dossier(character)
+            return
+
+    print(f"\nNo character found named '{search_name}'.")
+
+
+def delete_character(characters):
+    print("\n" + "=" * 40)
+    print("          DELETE CHARACTER          ")
+    print("=" * 40)
+
+    search_name = input("Enter character name to delete: ").strip().lower()
+    if not search_name:
+        print("[!] Search name cannot be empty.")
+        return
+    
+    found_character = None
+    for character in characters:
+        if search_name in character["Name"].lower():
+            found_character = character
+            break    
+
+    if not found_character:
+        print("[!] No character found matching '{search_name}'. ") 
+        return 
+
+    confirm = input(f"\n Are you sure you want to delete '{found_character['Name']}? (y/n): ").strip().lower()
+
+    if confirm == "y":
+        characters.remove(found_character)
+        save_characters("characters.csv", characters)
+        print(f"\n[-] '{found_character['Name']}' has been permanently deleted.")
+    else:
+        print("[!] Deletion cancelled.")
+        
+    
+   
 
 def display_menu():
     print("\n" + "=" * 40)
     print("          COMMAND MENU          ")
     print("=" * 40)
-    print("   list - full character roster")
-    print("   add  - Add a new character")
-    print("   exit - Exit the program")
+    print("   list   - full character roster")
+    print("   search - Search characters by name")
+    print("   add    - Add a new character")
+    print("   delete - Delete a character")
+    print("   exit   - Exit the program")
     print("=" * 40)
 
 
@@ -270,6 +320,26 @@ def save_characters(filename, characters):
         for character in characters:
             row = {key: character[key] for key in fields}
             writer.writerow(row)
+
+
+def display_dossier(character):
+    hp_label = get_HP_label(character["MaxHP"])
+    attack_label = get_attack_label(character["Attack"])
+    defense_label = get_defense_label(character["Defense"])
+    rank_label = get_rank_label(character["Wins"])
+
+    print("\n" + "~" * 50)
+    print(f"   {character['Name'].upper()} — DOOP DOSSIER")
+    print("~" * 50)
+    print(f"{'Faction:':<15}{character['Faction']}")
+    print(f"{'HP:':<15}{character['MaxHP']} ({hp_label})")
+    print(f"{'Attack:':<15}{character['Attack']} ({attack_label})")
+    print(f"{'Defense:':<15}{character['Defense']} ({defense_label})")
+    print(f"{'Power:':<15}{character['Power']}")
+    print(f"{'Combat Role:':<15}{character['Combat_Role']}")
+    print(f"{'Rank:':<15}{rank_label}")
+    print(f"{'Record:':<15}{character['Wins']} Wins / {character['Losses']} Losses")
+    print("~" * 50 + "\n")
    
 
 def main():
@@ -282,8 +352,12 @@ def main():
         
         if command == "list":
             list_characters(characters)
+        elif command == "search":
+            search_character(characters)
         elif command == "add":
             add_character(characters)
+        elif command == "delete":
+            delete_character(characters)
         elif command == "exit":
             print("Goodbye!")
             break
