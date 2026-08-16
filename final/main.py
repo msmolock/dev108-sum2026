@@ -7,6 +7,16 @@ import csv
 import random
 import time
 
+CATCHPHRASES = [
+    "Bite my shiny metal ass!",
+    "I'm 40% combat ready!",
+    "I have no idea what I'm doing, but I'm doing it really well!",
+    "You gotta do what you gotta do!",
+    "My legs are fine, it's my pride thats hurt!",
+    "Kiff, inform the men that I have hit them!"
+
+]
+
 
 def display_title():
     print("=" * 60)
@@ -309,6 +319,7 @@ def display_menu():
     print("   search - Search characters by name")
     print("   add    - Add a new character")
     print("   delete - Delete a character")
+    print("   battle - Enter the D.O.O.P. Battle Arena")
     print("   exit   - Exit the program")
     print("=" * 40)
 
@@ -340,6 +351,55 @@ def display_dossier(character):
     print(f"{'Rank:':<15}{rank_label}")
     print(f"{'Record:':<15}{character['Wins']} Wins / {character['Losses']} Losses")
     print("~" * 50 + "\n")
+
+
+def battle_engine(characters):
+    print("\n" + "=" * 45)
+    print("          D.O.O.P. BATTLE ARENA          ")
+    print("\n" + "=" * 45)
+    if len(characters) < 2:
+        print("You need at least 2 characters in the roster to battle.")
+        return
+
+    pick_mode = input("Choose fighters manually or randomly? (m/r): ").strip().lower()
+    
+    if pick_mode == "r":
+        fighter1, fighter2 = random.sample(characters, 2)
+    else:
+        print("\nChoose your fighter:")
+        for i, character in enumerate(characters, start=1):
+            print(f"{i}. {character['Name']}")
+        choice1 = int(input("Enter number for Fighter 1: ").strip())
+        fighter1 = characters[choice1 - 1]
+        
+        choice2 = int(input("Enter number for Fighter 2: ").strip())
+        fighter2 = characters[choice2 - 1]
+
+    print(f"\n{fighter1['Name']} VS {fighter2['Name']}!")
+    time.sleep(1)
+    
+    while fighter1["HP"] > 0 and fighter2["HP"] > 0:
+        damage1 = max(1, fighter1["Attack"] - fighter2["Defense"])
+        fighter2["HP"] -= damage1
+        print(f"{fighter1['Name']} attacks {fighter2['Name']} for {damage1} damage! ({max(0, fighter2['HP'])} HP left)")
+        time.sleep(0.8)
+        
+        if fighter2["HP"] <= 0:
+            break
+        
+        damage2 = max(1, fighter2["Attack"] - fighter1["Defense"])
+        fighter1["HP"] -= damage2
+        print(f"{fighter2['Name']} attacks {fighter1['Name']} for {damage2} damage! ({max(0, fighter1['HP'])} HP left)")
+        time.sleep(0.8)
+    
+    winner = fighter1 if fighter1["HP"] > 0 else fighter2
+    print(f"\n{winner['Name']} wins the battle!")
+    loser = fighter2 if winner == fighter1 else fighter1
+    winner["Wins"] += 1
+    loser["Losses"] += 1
+    save_characters("characters.csv", characters)
+    print(f"\n--- Updated Record ---")
+    display_dossier(winner)
    
 
 def main():
@@ -358,6 +418,8 @@ def main():
             add_character(characters)
         elif command == "delete":
             delete_character(characters)
+        elif command == "battle":
+            battle_engine(characters)
         elif command == "exit":
             print("Goodbye!")
             break

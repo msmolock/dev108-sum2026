@@ -1,7 +1,7 @@
 Name,Faction,MaxHP,Attack,Defense,Power,Combat_Role,Wins,Losses
-Zapp Brannigan,Officer,120,28,12,Velour Strike,High Offense / Glass Cannon,0,0
+Zapp Brannigan,Officer,120,28,12,Velour Strike,High Offense / Glass Cannon,1,0
 Kif Kroker,Officer,90,16,20,Sigh of Fortitude,High Defense / Tank,0,0
-Leela Turanga,Officer,110,25,16,Boot to the head,Balanced / Martial Artist,0,0
+Leela Turanga,Officer,110,25,16,Boot to the head,Balanced / Martial Artist,0,1
 Bender,Officer,130,22,18,Shiny metal chassis,High HP heavyweight,0,0
 Philip J. Fry,Officer,105,18,14,Delta brainwave,Unpredictable / Luck,0,0
 Killbot Swarm,Enemy,110,24,12,Preset kill limit,Relentless swarm,0,0
