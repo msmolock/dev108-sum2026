@@ -20,15 +20,13 @@ This is a Python application that manages a roster of D.O.O.P. officers and enem
 - Search for specific character dossiers by full or partial name
 - **Roster Management:**
 - Recruit: Add new characters with randomized stats and custom special abilities
-- Delete: Permanently remove characters from the D.O.O.P. roster
+  deletion        
 - **D.O.O.P. Battle Arena:**
 - Manual or random choice for combatants
 - Random damage based on Attack/Defense
 - Random healing chance
 - Random victory catchphrases
 - Stats automatically update after battle and appear in the updated dossier
-
----
 
 ## Test Cases
 
@@ -44,6 +42,6 @@ This is a Python application that manages a roster of D.O.O.P. officers and enem
 **Input:** Command: battle → Manual selection → Philip J. Fry vs. Kif Kroker
 **Expected Output:** Randomized damage and occasional healing events display each round; battle ends when one character's HP reaches 0; winner's Wins count increases by 1, loser's Losses count increases by 1, and both are saved to characters.csv.
 
-### AI Usage Disclosure
+## AI Usage Disclosure
 
 I used Claude (Anthropic's AI assistant) for a few specific new techniques I hadn't encountered before (such as using the time module for pacing, and a dictionary comprehension technique to filter fields before saving to CSV), Claude explained and demonstrated the syntax directly, since these were genuinely new concepts beyond what I'd built on my own so far. All character designs, dialogue, stat balancing, and overall program logic are my own.

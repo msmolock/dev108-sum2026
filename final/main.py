@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 # Michael Smolock
-# August 16, 2026
+# August 17, 2026
 # Final Project - Futurama battle 
 
 import csv
 import random
 import time
 
+# Just some wacjky catchphrases from the show that I thought would add a little levity.
 CATCHPHRASES = [
     "Bite my shiny metal ass!",
     "I'm 40% combat ready!",
@@ -20,7 +21,7 @@ CATCHPHRASES = [
 
 ]
 
-
+# Prints the initial D.O.O.P. Central database screen and title.
 def display_title():
     print("=" * 60)
     print(" Connecting to D.O.O.P Central database....")
@@ -35,8 +36,7 @@ def display_title():
     print()
 
 # Column headers for csv
-
-fields = ["Name", "Faction", "MaxHP", "Attack", "Defense", "Power", "Combat_Role", "Wins", "Losses"]
+fields = ["Name", "Faction", "MaxHP", "Attack", "Defense", "Power", "Combat_Role", "Wins", "Losses", "Original"]
 
 Officers = [
 
@@ -50,6 +50,7 @@ Officers = [
         "Combat_Role": "High Offense / Glass Cannon",
         "Wins": 0,
         "Losses": 0,
+        "Original": "Yes",
     },
     {
         "Name": "Kif Kroker",
@@ -61,6 +62,7 @@ Officers = [
         "Combat_Role": "High Defense / Tank",
         "Wins": 0,
         "Losses": 0,
+        "Original": "Yes",
     },
     {   "Name": "Leela Turanga",
         "Faction": "Officer",
@@ -71,6 +73,7 @@ Officers = [
         "Combat_Role": "Balanced / Martial Artist",
         "Wins": 0,
         "Losses": 0,
+        "Original": "Yes",
     },
     {   "Name": "Bender",
         "Faction": "Officer",
@@ -81,6 +84,7 @@ Officers = [
         "Combat_Role": "High HP heavyweight",
         "Wins": 0,
         "Losses": 0,
+        "Original": "Yes",
     },
     {   "Name": "Philip J. Fry",
         "Faction": "Officer",
@@ -91,6 +95,7 @@ Officers = [
         "Combat_Role": "Unpredictable / Luck",
         "Wins": 0,
         "Losses": 0,
+        "Original": "Yes",
     }
 ]
 
@@ -105,6 +110,7 @@ Enemies = [
         "Combat_Role": "Relentless swarm",
         "Wins": 0,
         "Losses": 0,
+        "Original": "Yes",
     },
     {   "Name": "Lrrr of Omicron Persei 8",
         "Faction": "Enemy",
@@ -115,6 +121,7 @@ Enemies = [
         "Combat_Role": "Heavyweight Boss",
         "Wins": 0,
         "Losses": 0,
+        "Original": "Yes",
         },
     {   "Name": "Robot Santa",
         "Faction": "Enemy",
@@ -125,6 +132,7 @@ Enemies = [
         "Combat_Role": "Extreme offense / Fragile",
         "Wins": 0,
         "Losses": 0,
+        "Original": "Yes",
     },    
     {   "Name": "Brain Spawn",
         "Faction": "Enemy",
@@ -135,6 +143,7 @@ Enemies = [
         "Combat_Role": "High defense / Tactical",
         "Wins": 0,
         "Losses": 0,
+        "Original": "Yes",
             },
     {   "Name": "Roberto",
         "Faction": "Enemy",
@@ -145,19 +154,24 @@ Enemies = [
         "Combat_Role": "Fast & lethal striker",
         "Wins": 0,
         "Losses": 0,
+        "Original": "Yes",
             },
 ]
 
+# Saves the roster list to a CSV file.
 def save_characters(filename, characters):
     with open(filename, "w", newline="") as file:
         writer = csv.DictWriter(file, fieldnames=fields)
         writer.writeheader()
-        writer.writerows(characters)
+        for character in characters:
+            row = {key: character[key] for key in fields}
+            writer.writerow(row)
 
 # Combine both rosters and save to one file
 all_characters = Officers + Enemies
 save_characters("characters.csv", all_characters)
 
+# Reads character records from characters and builds a list of dictionaries.
 def load_characters(filename):
     characters = []
     with open(filename, "r", newline="") as file:
@@ -175,6 +189,7 @@ def load_characters(filename):
 
     return characters
 
+# Analyzes a character's HP stat and returns a health tier.
 def get_HP_label(value):
     if value >= 130:
         return "Juggernaut"
@@ -183,9 +198,10 @@ def get_HP_label(value):
     else:
         return "Fragile"
 
+# Analyzes a character's Attack stat and returns a combat tier.
 def get_attack_label(value):
     if value >= 28:
-        return "Devasting Striker"
+        return "Devastating Striker"
     elif value >= 24:
         return "Heavy Hitter"
     elif value >= 18:
@@ -193,6 +209,8 @@ def get_attack_label(value):
     else:
         return "Light Hitter"
 
+    
+# Analyzes a character's Defense stat and returns an armor rating.
 def get_defense_label(value):
     if value >= 18:
         return "Heavy Fortress"
@@ -203,7 +221,7 @@ def get_defense_label(value):
     else:
         return "Fragile Glass"
 
-
+# Determines a character's D.O.O.P. rank title based on their career win total.
 def get_rank_label(value):
     if value >= 10:
         return "Decorated Ace"
@@ -214,10 +232,9 @@ def get_rank_label(value):
     else:
         return "Rookie Cadet"
 
-
+# Displays the full character roster showing basic stats,combat roles, ranks, and career win/loss records. 
 def list_characters(characters):
     print(f"{'Name':<25}{'Faction':<10}{'HP':<24}{'Attack':<25}{'Defense':<25}{'Wins':<6}{'Losses':<6}")
-#    print(f"{'Name':<25}{'Faction':<10}{'HP':<20}{'Attack':<20}{'Defense':<20}{'Wins':<6}{'Losses':<6}")
     for character in characters:
         hp_label = get_HP_label(character["MaxHP"])
         attack_label = get_attack_label(character["Attack"])
@@ -227,9 +244,7 @@ def list_characters(characters):
         defense_display = f"{character['Defense']} ({defense_label})"
         print(f"{character['Name']:<25}{character['Faction']:<10}{hp_display:<24}{attack_display:<25}{defense_display:<25}{character['Wins']:<6}{character['Losses']:<6}")
 
-characters = load_characters("characters.csv")
-
-
+# User is prompted to add a new character to the roster.
 def add_character(characters):
     print("\n" + "=" * 40)
     print("      RECRUIT NEW CHARACTER      ")
@@ -257,6 +272,7 @@ def add_character(characters):
         "Combat_Role": role,
         "Wins": 0,
            "Losses": 0,
+           "Original": "No",
     }
     
     characters.append(new_char)
@@ -264,6 +280,7 @@ def add_character(characters):
     save_characters("characters.csv", characters)
     print(f"\n{name} has been added to the roster!")
 
+# Searches the roster for a character matching a partial or full name input. If found, displays dossier.
 def search_character(characters):
     print("\n" + "=" * 40)
     print("          SEARCH CHARACTERS          ")
@@ -281,7 +298,7 @@ def search_character(characters):
 
     print(f"\nNo character found named '{search_name}'.")
 
-
+# User can remove a character from the roster after a confirmation.
 def delete_character(characters):
     print("\n" + "=" * 40)
     print("          DELETE CHARACTER          ")
@@ -299,21 +316,22 @@ def delete_character(characters):
             break    
 
     if not found_character:
-        print("[!] No character found matching '{search_name}'. ") 
+        print(f"[!] No character found matching '{search_name}'.")
         return 
+    if found_character.get("Original", "No") == "Yes":
+        print(f"\n[!] {found_character['Name']} is a core D.O.O.P. roster member and cannot be deleted.")
+        return
 
-    confirm = input(f"\n Are you sure you want to delete '{found_character['Name']}? (y/n): ").strip().lower()
+    confirm = input(f"\n Are you sure you want to delete '{found_character['Name']}'? (y/n): ").strip().lower()
 
     if confirm == "y":
         characters.remove(found_character)
         save_characters("characters.csv", characters)
         print(f"\n[-] '{found_character['Name']}' has been permanently deleted.")
     else:
-        print("[!] Deletion cancelled.")
-        
+        print("[!] Deletion cancelled.")    
     
-   
-
+# Displays the full menu   
 def display_menu():
     print("\n" + "=" * 40)
     print("          COMMAND MENU          ")
@@ -326,16 +344,7 @@ def display_menu():
     print("   exit   - Exit the program")
     print("=" * 40)
 
-
-def save_characters(filename, characters):
-    with open(filename, "w", newline="") as file:
-        writer = csv.DictWriter(file, fieldnames=fields)
-        writer.writeheader()
-        for character in characters:
-            row = {key: character[key] for key in fields}
-            writer.writerow(row)
-
-
+# Prints a full dossier for a character.
 def display_dossier(character):
     hp_label = get_HP_label(character["MaxHP"])
     attack_label = get_attack_label(character["Attack"])
@@ -355,7 +364,7 @@ def display_dossier(character):
     print(f"{'Record:':<15}{character['Wins']} Wins / {character['Losses']} Losses")
     print("~" * 50 + "\n")
 
-
+# It's the battle engine for combat between to random or manually chosen characters.
 def battle_engine(characters):
     print("\n" + "=" * 45)
     print("          D.O.O.P. BATTLE ARENA          ")
@@ -424,7 +433,7 @@ def battle_engine(characters):
     print("--- 💀 LOSER DOSSIER ---")
     display_dossier(loser)
     
-
+# Main loop for the program.
 def main():
     display_title()
     characters = load_characters("characters.csv")
