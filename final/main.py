@@ -13,7 +13,10 @@ CATCHPHRASES = [
     "I have no idea what I'm doing, but I'm doing it really well!",
     "You gotta do what you gotta do!",
     "My legs are fine, it's my pride thats hurt!",
-    "Kiff, inform the men that I have hit them!"
+    "Stop exploding, you cowards!",
+    "Like most of life's problems, this one can be solved with bending!",
+    "50-50 chance of survival? I'll take those odds!",
+    "Now if you'll excuse me, I have to go perform a victory dance."
 
 ]
 
@@ -410,13 +413,17 @@ def battle_engine(characters):
     
     winner = fighter1 if fighter1["HP"] > 0 else fighter2
     print(f"\n{winner['Name']} wins the battle!")
+    print(f'"{random.choice(CATCHPHRASES)}"')
     loser = fighter2 if winner == fighter1 else fighter1
     winner["Wins"] += 1
     loser["Losses"] += 1
     save_characters("characters.csv", characters)
-    print(f"\n--- Updated Record ---")
+    print("\n--- 🏆 WINNER DOSSIER ---")
     display_dossier(winner)
-   
+
+    print("--- 💀 LOSER DOSSIER ---")
+    display_dossier(loser)
+    
 
 def main():
     display_title()
