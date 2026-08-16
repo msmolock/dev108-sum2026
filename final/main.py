@@ -379,18 +379,34 @@ def battle_engine(characters):
     time.sleep(1)
     
     while fighter1["HP"] > 0 and fighter2["HP"] > 0:
-        damage1 = max(1, fighter1["Attack"] - fighter2["Defense"])
-        fighter2["HP"] -= damage1
-        print(f"{fighter1['Name']} attacks {fighter2['Name']} for {damage1} damage! ({max(0, fighter2['HP'])} HP left)")
-        time.sleep(0.8)
-        
+        # Fighter 1's turn
+        heal_chance1 = random.randint(1, 100)
+        if heal_chance1 <= 15:
+            heal_amount1 = random.randint(5, 15)
+            fighter1["HP"] = min(fighter1["MaxHP"], fighter1["HP"] + heal_amount1)
+            print(f"{fighter1['Name']} heals for {heal_amount1} HP! ({fighter1['HP']} HP left)")
+        else:
+            base_damage1 = fighter1["Attack"] - fighter2["Defense"]
+            damage1 = max(1, random.randint(base_damage1 - 3, base_damage1 + 3))
+            fighter2["HP"] -= damage1
+            print(f"{fighter1['Name']} attacks {fighter2['Name']} for {damage1} damage! ({max(0, fighter2['HP'])} HP left)")
+        time.sleep(1.5)
+
         if fighter2["HP"] <= 0:
             break
-        
-        damage2 = max(1, fighter2["Attack"] - fighter1["Defense"])
-        fighter1["HP"] -= damage2
-        print(f"{fighter2['Name']} attacks {fighter1['Name']} for {damage2} damage! ({max(0, fighter1['HP'])} HP left)")
-        time.sleep(0.8)
+
+        # Fighter 2's turn
+        heal_chance2 = random.randint(1, 100)
+        if heal_chance2 <= 15:
+            heal_amount2 = random.randint(5, 15)
+            fighter2["HP"] = min(fighter2["MaxHP"], fighter2["HP"] + heal_amount2)
+            print(f"{fighter2['Name']} heals for {heal_amount2} HP! ({fighter2['HP']} HP left)")
+        else:
+            base_damage2 = fighter2["Attack"] - fighter1["Defense"]
+            damage2 = max(1, random.randint(base_damage2 - 3, base_damage2 + 3))
+            fighter1["HP"] -= damage2
+            print(f"{fighter2['Name']} attacks {fighter1['Name']} for {damage2} damage! ({max(0, fighter1['HP'])} HP left)")
+        time.sleep(1.5)
     
     winner = fighter1 if fighter1["HP"] > 0 else fighter2
     print(f"\n{winner['Name']} wins the battle!")
