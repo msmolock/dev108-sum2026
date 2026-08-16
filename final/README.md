@@ -3,7 +3,7 @@
 **Author:** Michael Smolock  
 **Course:** DEV 108 — Summer 2026  
 **Project:** Final Project  
-**Date:** August 16, 2026
+**Date:** August 17, 2026
 
 ---
 
