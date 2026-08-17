@@ -1,11 +1,11 @@
 Name,Faction,MaxHP,Attack,Defense,Power,Combat_Role,Wins,Losses,Original
 Zapp Brannigan,Officer,120,28,12,Velour Strike,High Offense / Glass Cannon,0,0,Yes
-Kif Kroker,Officer,90,16,20,Sigh of Fortitude,High Defense / Tank,0,0,Yes
-Leela Turanga,Officer,110,25,16,Boot to the head,Balanced / Martial Artist,1,0,Yes
+Kif Kroker,Officer,90,16,10,Sigh of Fortitude,High Defense / Tank,0,1,Yes
+Leela Turanga,Officer,110,25,16,Boot to the head,Balanced / Martial Artist,0,0,Yes
 Bender,Officer,130,22,18,Shiny metal chassis,High HP heavyweight,0,0,Yes
 Philip J. Fry,Officer,105,18,14,Delta brainwave,Unpredictable / Luck,0,0,Yes
 Killbot Swarm,Enemy,110,24,12,Preset kill limit,Relentless swarm,0,0,Yes
 Lrrr of Omicron Persei 8,Enemy,140,28,15,Disintegrator Ray,Heavyweight Boss,0,0,Yes
 Robot Santa,Enemy,125,30,10,Naughty list rocket,Extreme offense / Fragile,0,0,Yes
-Brain Spawn,Enemy,95,20,18,Stupidification wave,High defense / Tactical,0,0,Yes
+Brain Spawn,Enemy,95,20,18,Stupidification wave,High defense / Tactical,1,0,Yes
 Roberto,Enemy,100,26,11,Stabbing knife,Fast & lethal striker,0,0,Yes

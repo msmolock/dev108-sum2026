@@ -57,7 +57,7 @@ Officers = [
         "Faction": "Officer",
         "MaxHP": 90,
         "Attack": 16,
-        "Defense": 20,
+        "Defense": 10,
         "Power": "Sigh of Fortitude",
         "Combat_Role": "High Defense / Tank",
         "Wins": 0,
@@ -393,7 +393,7 @@ def battle_engine(characters):
     while fighter1["HP"] > 0 and fighter2["HP"] > 0:
         # Fighter 1's turn
         heal_chance1 = random.randint(1, 100)
-        if heal_chance1 <= 15:
+        if heal_chance1 <= 8:
             heal_amount1 = random.randint(5, 15)
             fighter1["HP"] = min(fighter1["MaxHP"], fighter1["HP"] + heal_amount1)
             print(f"{fighter1['Name']} heals for {heal_amount1} HP! ({fighter1['HP']} HP left)")
@@ -409,7 +409,7 @@ def battle_engine(characters):
 
         # Fighter 2's turn
         heal_chance2 = random.randint(1, 100)
-        if heal_chance2 <= 15:
+        if heal_chance2 <= 8:
             heal_amount2 = random.randint(5, 15)
             fighter2["HP"] = min(fighter2["MaxHP"], fighter2["HP"] + heal_amount2)
             print(f"{fighter2['Name']} heals for {heal_amount2} HP! ({fighter2['HP']} HP left)")
